@@ -127,6 +127,15 @@ require('postcss-plugin-px2rem')({
 </script>
 ```
 
-# 解决 jsx 中的 px 转 rem
+# 9、解决 jsx 中的 px 转 rem
 
 自定义全局的 px2rem 方法。
+
+# 10、解决上面设置 1rem 为 75px，导致 material-ui 样式中使用了 rem 的样式过大
+
+可以考虑将 75px 调整为更小的值，但是考虑到要做平板的兼容，这种方案是行不通的。
+因为 rem 的值是随着设备屏幕的宽度大小变化的， 所以说当设备的宽度很大时，material-ui 组件的字体一样会显得很大。
+
+# 11、 postcss-px-to-viewport
+
+选用该插件对所有的 px 转换成 vw 视窗尺寸。将我们的代码转成 vw 这样即能解决影响 material-ui 组件的样式问题又能达到和 rem 一样的效果。

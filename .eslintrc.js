@@ -10,7 +10,7 @@ module.exports = {
   globals: {
     // "wx": "readonly",
     NodeJS: 'readonly',
-    px2rem: 'readonly'
+    px: 'readonly'
   },
   parser: '@typescript-eslint/parser',
   extends: [

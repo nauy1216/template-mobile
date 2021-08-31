@@ -131,20 +131,39 @@ module.exports = function (webpackEnv) {
             // which in turn let's users customize the target behavior as per their needs.
             postcssNormalize(),
             // 将px转成rem
-            require('postcss-plugin-px2rem')({
-              // 1. 换算基准，直接取750设计稿的px尺寸写样式即可。
-              // 2. 配合lib-flexible使用750的设计稿, 这里直接将根节点的字体大小设置为75px, 此时750px对应的值应该是10rem
-              rootValue: 75, 
-              // 保留的小数位
-              unitPrecision: 5,
-              // 媒体查询
-              mediaQuery: true,
-              // 需要排除在外的目录
-              exclude: /(node_module)/i,
-              // 在rem.js全局作用下，排除指定的文件的影响
-              selectorBlackList: [], 
-              // 过滤属性
-              propBlackList: ['border'] 
+            // require('postcss-plugin-px2rem')({
+            //   // 1. 换算基准，直接取750设计稿的px尺寸写样式即可。
+            //   // 2. 配合lib-flexible使用750的设计稿, 这里直接将根节点的字体大小设置为75px, 此时750px对应的值应该是10rem
+            //   rootValue: 75, 
+            //   // 保留的小数位
+            //   unitPrecision: 5,
+            //   // 媒体查询
+            //   mediaQuery: true,
+            //   // 需要排除在外的目录
+            //   exclude: /(node_module)/i,
+            //   // 在rem.js全局作用下，排除指定的文件的影响
+            //   selectorBlackList: [], 
+            //   // 过滤属性
+            //   propBlackList: ['border'] 
+            // })
+            // 将px转成vw
+            // 需要按照375px的稿子进行编写代码
+            require('postcss-px-to-viewport')({
+              unitToConvert: 'px', // 需要转换的单位，默认为"px"
+              viewportWidth: 375,  // 设计稿的视口宽度
+              unitPrecision: 5,    // 单位转换后保留的精度
+              propList: ['*'],     // 能转化为vw的属性列表
+              viewportUnit: 'vw',  // 希望使用的视口单位
+              fontViewportUnit: 'vw', // 字体使用的视口单位
+              selectorBlackList: [], // 需要忽略的CSS选择器，不会转为视口单位，使用原有的px等单位
+              minPixelValue: 1, // 设置最小的转换数值，如果为1的话，只有大于1的值会被转换
+              mediaQuery: false, // 媒体查询里的单位是否需要转换单位
+              replace: true,
+              exclude: /(node_module)/i, // 忽略某些文件夹下的文件或特定文件
+              // include: undefined, //  如果设置了include，那将只有匹配到的文件才会被转换
+              landscape: false, // 是否添加根据 landscapeWidth 生成的媒体查询条件 
+              landscapeUnit: 'vw', // 横屏时使用的单位
+              landscapeWidth: 667 // 横屏时使用的视口宽度
             })
           ],
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
