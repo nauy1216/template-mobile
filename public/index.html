@@ -42,6 +42,9 @@
         function setRemUnit() {
           var rem = docEl.clientWidth / 10;
           docEl.style.fontSize = rem + 'px';
+          window.px2rem = function px2rem(px) {
+            return (px / rem).toFixed(5) + 'rem'
+          }
         }
 
         setRemUnit();

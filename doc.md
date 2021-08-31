@@ -126,3 +126,7 @@ require('postcss-plugin-px2rem')({
   })(window, document);
 </script>
 ```
+
+# 解决 jsx 中的 px 转 rem
+
+自定义全局的 px2rem 方法。

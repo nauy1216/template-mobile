@@ -37,7 +37,14 @@ export default function Login() {
     });
   };
 
-  return <div className="login">hello</div>;
+  return (
+    <div
+      style={{
+        height: px2rem(75)
+      }}>
+      hello
+    </div>
+  );
 
   return (
     <Container component="main" maxWidth="xs">
