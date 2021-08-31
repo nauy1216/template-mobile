@@ -18,7 +18,7 @@ const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
-const ESLintPlugin = require('eslint-webpack-plugin');
+// const ESLintPlugin = require('eslint-webpack-plugin');
 const paths = require('./paths');
 const modules = require('./modules');
 const getClientEnvironment = require('./env');
@@ -130,6 +130,22 @@ module.exports = function (webpackEnv) {
             // so that it honors browserslist config in package.json
             // which in turn let's users customize the target behavior as per their needs.
             postcssNormalize(),
+            // 将px转成rem
+            require('postcss-plugin-px2rem')({
+              // 1. 换算基准，直接取750设计稿的px尺寸写样式即可。
+              // 2. 配合lib-flexible使用750的设计稿, 这里直接将根节点的字体大小设置为75px, 此时750px对应的值应该是10rem
+              rootValue: 75, 
+              // 保留的小数位
+              unitPrecision: 5,
+              // 媒体查询
+              mediaQuery: true,
+              // 需要排除在外的目录
+              exclude: /(node_module)/i,
+              // 在rem.js全局作用下，排除指定的文件的影响
+              selectorBlackList: [], 
+              // 过滤属性
+              propBlackList: ['border'] 
+            })
           ],
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         },
@@ -709,25 +725,26 @@ module.exports = function (webpackEnv) {
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
-      new ESLintPlugin({
-        // Plugin options
-        extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
-        formatter: require.resolve('react-dev-utils/eslintFormatter'),
-        eslintPath: require.resolve('eslint'),
-        context: paths.appSrc,
-        cache: true,
-        // ESLint class options
-        cwd: paths.appPath,
-        resolvePluginsRelativeTo: __dirname,
-        baseConfig: {
-          extends: [require.resolve('eslint-config-react-app/base')],
-          rules: {
-            ...(!hasJsxRuntime && {
-              'react/react-in-jsx-scope': 'error',
-            }),
-          },
-        },
-      }),
+      // 编译时不使用eslint, 在vscode中使用eslint插件就好
+      // new ESLintPlugin({
+      //   // Plugin options
+      //   extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
+      //   formatter: require.resolve('react-dev-utils/eslintFormatter'),
+      //   eslintPath: require.resolve('eslint'),
+      //   context: paths.appSrc,
+      //   cache: true,
+      //   // ESLint class options
+      //   cwd: paths.appPath,
+      //   resolvePluginsRelativeTo: __dirname,
+      //   baseConfig: {
+      //     extends: [require.resolve('eslint-config-react-app/base')],
+      //     rules: {
+      //       ...(!hasJsxRuntime && {
+      //         'react/react-in-jsx-scope': 'error',
+      //       }),
+      //     },
+      //   },
+      // }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell webpack to provide empty mocks for them so importing them works.

@@ -1,19 +1,18 @@
 import loadable from '@loadable/component'; // 按需加载
 
-// 如果访问路径有二级目录，则需要配置这个值，如首页地址为'http://tianzhen.tech/blog/home'，则这里配置为'/blog'
 export const basename = '';
 export const routes = [
   {
     path: '/',
-    component: loadable(() => import('../pages/home')),
-    name: 'Home',
-    title: '首页'
+    component: loadable(() => import('../pages/login')),
+    name: 'Login',
+    title: '登录'
   },
   {
-    path: '/home',
-    component: loadable(() => import('../pages/home')),
-    name: 'Home',
-    title: '首页'
+    path: '/Login',
+    component: loadable(() => import('../pages/login')),
+    name: 'Login',
+    title: '登录'
   },
   // 404 Not Found
   {
