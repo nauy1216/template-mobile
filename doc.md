@@ -4,8 +4,6 @@
 create-react-app my-app --typescript
 ```
 
-
-
 # 2、启动项目
 
 ```
@@ -23,54 +21,25 @@ npm start
 
 
 # 3、安装eslint
-
-
-
-
-
-
-
 # 4、安装prettier
-
-
-
-
-
-
-
-
-
 # 5、vscode安装editorconfig插件
-
-
-
-
-
 # 6、使用husky
-
-
-
-
-
 # 6、使用react-router
 
 ## 1、安装依赖
-
-```
+```shell
 yarn add react-router-dom react-router-config @types/react-router-dom @types/react-router-config -D
 
 // 按需加载组件
 yarn add @loadable/component -D
-
 ```
+# 7、引入组件库
 
+```shell
+// 使用 npm
+npm install @material-ui/core@next @emotion/react @emotion/styled
 
-
-
-
-# 7、引入组件库antd
-
-```
-yarn add antd
+// 使用 yarn
+yarn add @material-ui/core@next @emotion/react @emotion/styled
 ```
 

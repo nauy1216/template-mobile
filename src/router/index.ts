@@ -4,10 +4,16 @@ import loadable from '@loadable/component'; // 按需加载
 export const basename = '';
 export const routes = [
   {
+    path: '/',
+    component: loadable(() => import('../pages/home')),
+    name: 'Home',
+    title: '首页'
+  },
+  {
     path: '/home',
     component: loadable(() => import('../pages/home')),
-    name: 'Demo',
-    title: 'Demo'
+    name: 'Home',
+    title: '首页'
   },
   // 404 Not Found
   {

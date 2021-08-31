@@ -1,4 +1,6 @@
 import React from 'react';
-export default function NotFound() {
-  return <div>404 </div>;
+import Button from '@material-ui/core/Button';
+
+export default function Home() {
+  return <Button>234</Button>;
 }
