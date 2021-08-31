@@ -8,7 +8,6 @@ module.exports = {
     'jsx-control-statements/jsx-control-statements': true // 能够在jsx中使用if，需要配合另外的babel插件使用
   },
   globals: {
-    // "wx": "readonly",
     NodeJS: 'readonly',
     px: 'readonly'
   },
