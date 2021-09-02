@@ -139,3 +139,11 @@ require('postcss-plugin-px2rem')({
 # 11、 postcss-px-to-viewport
 
 选用该插件对所有的 px 转换成 vw 视窗尺寸。将我们的代码转成 vw 这样即能解决影响 material-ui 组件的样式问题又能达到和 rem 一样的效果。
+
+# 12、增加骨架屏
+
+还未完成
+
+```
+npm i  page-skeleton-webpack-plugin
+```

@@ -1,17 +1,18 @@
 'use strict';
 
-// Do this as the first thing so that any code reading it knows the right env.
+// 设置环境变量
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
+// 捕获promise异常
 process.on('unhandledRejection', err => {
   throw err;
 });
 
-// Ensure environment variables are read.
+// 加载环境变量
 require('../config/env');
 
 
@@ -34,17 +35,18 @@ const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 const getClientEnvironment = require('../config/env');
 const react = require(require.resolve('react', { paths: [paths.appPath] }));
-
+// 获取环境变量
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
+// 检查必须的文件 index.html、index.tsx
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
-// Tools like Cloud9 rely on this.
+// Tools like Cloud9 rely on this. 默认端口
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 9527;
 const HOST = process.env.HOST || '0.0.0.0';
 
@@ -72,9 +74,11 @@ checkBrowsers(paths.appPath, isInteractive)
   .then(() => {
     // We attempt to use the default port but if it is busy, we offer the user to
     // run on a different port. `choosePort()` Promise resolves to the next free port.
+    // 如果端口占用就换一个端口
     return choosePort(HOST, DEFAULT_PORT);
   })
   .then(port => {
+    debugger
     if (port == null) {
       // We have not found a port.
       return;

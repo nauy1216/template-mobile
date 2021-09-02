@@ -1,10 +1,11 @@
 'use strict';
-
+debugger
 const fs = require('fs');
 const path = require('path');
 const paths = require('./paths');
 
 // Make sure that including paths.js after env.js will read .env variables.
+// 删除paths模块的缓存
 delete require.cache[require.resolve('./paths')];
 
 const NODE_ENV = process.env.NODE_ENV;
@@ -16,13 +17,13 @@ if (!NODE_ENV) {
 
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
 const dotenvFiles = [
-  `${paths.dotenv}.${NODE_ENV}.local`,
+  `${paths.dotenv}.${NODE_ENV}.local`, // .env.development.local
   // Don't include `.env.local` for `test` environment
   // since normally you expect tests to produce the same
   // results for everyone
-  NODE_ENV !== 'test' && `${paths.dotenv}.local`,
-  `${paths.dotenv}.${NODE_ENV}`,
-  paths.dotenv,
+  NODE_ENV !== 'test' && `${paths.dotenv}.local`, // .env.local
+  `${paths.dotenv}.${NODE_ENV}`, // .env.development
+  paths.dotenv, // .env
 ].filter(Boolean);
 
 // Load environment variables from .env* files. Suppress warnings using silent
@@ -33,6 +34,7 @@ const dotenvFiles = [
 dotenvFiles.forEach(dotenvFile => {
   if (fs.existsSync(dotenvFile)) {
     require('dotenv-expand')(
+      // 加载自定env文件内的环境变量，所有加载好的环境变量将挂在process.env上
       require('dotenv').config({
         path: dotenvFile,
       })
@@ -103,4 +105,4 @@ function getClientEnvironment(publicUrl) {
   return { raw, stringified };
 }
 
-module.exports = getClientEnvironment;
+module.exports = getClientEnvironment; // 获取环境变量

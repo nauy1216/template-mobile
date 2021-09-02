@@ -3,10 +3,12 @@
 const path = require('path');
 const fs = require('fs');
 const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath');
-
+debugger
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebook/create-react-app/issues/637
+// 获取到当前进程的地址
 const appDirectory = fs.realpathSync(process.cwd());
+// 相对地址转换成绝对地址
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
@@ -20,7 +22,7 @@ const publicUrlOrPath = getPublicUrlOrPath(
   require(resolveApp('package.json')).homepage,
   process.env.PUBLIC_URL
 );
-
+// 文件模块扩展名
 const moduleFileExtensions = [
   'web.mjs',
   'mjs',
@@ -36,7 +38,9 @@ const moduleFileExtensions = [
 ];
 
 // Resolve file paths in the same order as webpack
+// 根据地址获取模块
 const resolveModule = (resolveFn, filePath) => {
+  // 依次遍历查找对应的扩展名
   const extension = moduleFileExtensions.find(extension =>
     fs.existsSync(resolveFn(`${filePath}.${extension}`))
   );
@@ -44,13 +48,13 @@ const resolveModule = (resolveFn, filePath) => {
   if (extension) {
     return resolveFn(`${filePath}.${extension}`);
   }
-
+  // 如果都没找到，则认为这是一个js文件
   return resolveFn(`${filePath}.js`);
 };
 
 // config after eject: we're in ./config/
 module.exports = {
-  dotenv: resolveApp('.env'),
+  dotenv: resolveApp('.env'), // 环境变量
   appPath: resolveApp('.'),
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),

@@ -45,7 +45,9 @@ function readEnvFile(file, type) {
 
 // Get the https config
 // Return cert files if provided in env, otherwise just true or false
+// https获取证书
 function getHttpsConfig() {
+  // 从进程的环境中获取
   const { SSL_CRT_FILE, SSL_KEY_FILE, HTTPS } = process.env;
   const isHttps = HTTPS === 'true';
 
